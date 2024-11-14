@@ -1,8 +1,8 @@
 import React from 'react';
 // ADD IMPORTS BACK FOR GRAPHS SECTION
-// import GrantRatesByOfficeImg from '../../../styles/Images/bar-graph-no-text.png';
-// import GrantRatesByNationalityImg from '../../../styles/Images/pie-chart-no-text.png';
-// import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png';
+import GrantRatesByOfficeImg from '../../../styles/Images/bar-graph-no-text.png';
+import GrantRatesByNationalityImg from '../../../styles/Images/pie-chart-no-text.png';
+import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png';
 import HrfPhoto from '../../../styles/Images/paper-stack.jpg';
 import '../../../styles/RenderLandingPage.less';
 import { Button } from 'antd';
@@ -33,6 +33,21 @@ function RenderLandingPage(props) {
 
       {/* Graphs Section: Add code here for the graphs section for your first ticket */}
       {/* <div className="graphs-section"> */}
+      <div className = "graphs-section">
+        <div className= "grant-rates-graph-container">
+          <img src={GrantRatesByOfficeImg} alt="test" />
+          <h3> Search Grant Rates By Office </h3>
+        </div>
+        <div className= "grants-rate-nation-graph-container">
+          <img src={GrantRatesByNationalityImg} alt="test"/>
+          <h3> Search Grant Rates By Nationality </h3>
+        </div>
+        <div className= "grants-rates-over-time-graph-container">
+          <img src={GrantRatesOverTimeImg} alt="test"/>
+          <h3> Search Grant Rates Over Time </h3>
+        </div> 
+      </div>
+
       <div className="view-more-data-btn-container">
         <Button
           type="default"
@@ -40,6 +55,16 @@ function RenderLandingPage(props) {
           onClick={() => history.push('/graphs')}
         >
           View the Data
+        </Button>
+      </div>
+
+      <div className="download-the-data-btn-container">
+        <Button
+          type="default"
+          style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+          //onClick={() => history.push('/graphs')}
+        >
+          Download the Data
         </Button>
       </div>
 
