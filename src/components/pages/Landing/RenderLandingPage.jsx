@@ -33,19 +33,22 @@ function RenderLandingPage(props) {
 
       {/* Graphs Section: Add code here for the graphs section for your first ticket */}
       {/* <div className="graphs-section"> */}
-      <section className = "graphs-section">
-        <div className= "grant-rates-graph-container">
+
+      {/* {I think i want to make each image with header it's own polaroid or card} */}
+
+      <section className="graphs-section">
+        <div className="grant-graphs-container">
           <img src={GrantRatesByOfficeImg} alt="test" />
           <h3> Search Grant Rates By Office </h3>
         </div>
-        <div className= "grants-rate-nation-graph-container">
-          <img src={GrantRatesByNationalityImg} alt="test"/>
+        <div className="grant-graphs-container">
+          <img src={GrantRatesByNationalityImg} alt="test" />
           <h3> Search Grant Rates By Nationality </h3>
         </div>
-        <div className= "grants-rates-over-time-graph-container">
-          <img src={GrantRatesOverTimeImg} alt="test"/>
+        <div className="grant-graphs-container">
+          <img src={GrantRatesOverTimeImg} alt="test" />
           <h3> Search Grant Rates Over Time </h3>
-        </div> 
+        </div>
       </section>
 
       <div className="view-more-data-btn-container">
@@ -54,18 +57,19 @@ function RenderLandingPage(props) {
           style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
           onClick={() => history.push('/graphs')}
         >
-          View the Data
+          <span>View the Data</span>
         </Button>
-      </div>
-
-      <div className="download-the-data-btn-container">
-        <Button
-          type="default"
-          style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
-          //onClick={() => history.push('/graphs')}
-        >
-          Download the Data
-        </Button>
+        <a href="https://humanrightsfirst.org/wp-content/uploads/2022/10/COW2021001887-I589Data.csv">
+          <div class="read-more-btn">
+            <button
+              type="button"
+              class="ant-btn ant-btn-default"
+              style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+            >
+              Download the Data
+            </button>
+          </div>
+        </a>
       </div>
 
       <section className="middle-section">
