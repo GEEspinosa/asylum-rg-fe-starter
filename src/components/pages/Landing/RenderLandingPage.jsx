@@ -19,8 +19,8 @@ function RenderLandingPage(props) {
   const history = useHistory();
 
   return (
-    <div className="main">
-      <div className="header">
+    <main className="main">
+      <header className="header">
         <div className="header-text-container">
           <h1>Asylum Office Grant Rate Tracker</h1>
           <h3>
@@ -29,11 +29,11 @@ function RenderLandingPage(props) {
             explore USCIS data on Asylum Office decisions
           </h3>
         </div>
-      </div>
+      </header>
 
       {/* Graphs Section: Add code here for the graphs section for your first ticket */}
       {/* <div className="graphs-section"> */}
-      <div className = "graphs-section">
+      <section className = "graphs-section">
         <div className= "grant-rates-graph-container">
           <img src={GrantRatesByOfficeImg} alt="test" />
           <h3> Search Grant Rates By Office </h3>
@@ -46,7 +46,7 @@ function RenderLandingPage(props) {
           <img src={GrantRatesOverTimeImg} alt="test"/>
           <h3> Search Grant Rates Over Time </h3>
         </div> 
-      </div>
+      </section>
 
       <div className="view-more-data-btn-container">
         <Button
@@ -68,7 +68,7 @@ function RenderLandingPage(props) {
         </Button>
       </div>
 
-      <div className="middle-section">
+      <section className="middle-section">
         <div className="hrf-img-container">
           <img src={HrfPhoto} alt="Human Rights First" className="hrf-img" />
         </div>
@@ -83,7 +83,8 @@ function RenderLandingPage(props) {
             the data set
           </h3>
         </div>
-      </div>
+      </section>
+
       <div>
         {/* Bottom Section: Add code here for the graphs section for your first ticket */}
         {/* <div className="bottom-section">*/}
@@ -91,7 +92,7 @@ function RenderLandingPage(props) {
           Back To Top ^
         </p>
       </div>
-    </div>
+    </main>
   );
 }
 export default RenderLandingPage;
