@@ -13,6 +13,12 @@
   display: flex;
   text-align: center;
   width: 100%;
+
+  //dev note: changed heigh value from 20vh to 100% after experimenting
+  // helping the text to not fall off the background banner.
+  // further, lots of the template media query styles that got into the way
+  // had to do with setting 'vh' units in height and padding settings.
+
   height: 100%;
   margin-bottom: 10%;
 }
@@ -26,11 +32,15 @@
 .header-text-container {
   text-align: center;
   width: 100%;
+
+  //dev note: added below to improve styling
+  //helped to manage the scaling of the text and gave more room
+  //for the background to frame it
+
   word-wrap: break-word;
   align-items: center;
   padding-top: 1%;
   padding-bottom: 2%;
-  //outline: 2px solid black;
 }
 
 .header-text-container h1 {
@@ -51,10 +61,19 @@
   justify-content: center;
   gap: 15px;
 
-  @media (max-width: 700px) {
+  // dev note: commented out lots of media queries below
+  // because they were a headache and seemed to not work properly
+  // after, made custom below to mock roughly the place to swich
+  // layout orientation
+
+  @media (max-width: 800px) {
     flex-direction: column;
   }
 }
+
+// dev note: below is completely custom attempt at replicating the mock up from README
+// at this point I wasn't using dev tools to inspect the deployed site's elements
+// I kept it this way for feedback, and it seemed to scale better look okay enough.
 
 .grant-graphs-container {
   display: flex;
@@ -113,12 +132,15 @@
 }
 
 .bottom-section {
-//ADD THIS BACK IN WHEN YOU HAVE A BOTTOM SECTION
+  //ADD THIS BACK IN WHEN YOU HAVE A BOTTOM SECTION
+  //dev note: at this point, I was referring
+  //to the deployed site with chrome dev tools.
+
   text-align: center;
   margin-top: 10%;
 
   h1 {
-    font-family: "moneta";
+    font-family: 'moneta';
     font-size: 3.5rem;
     margin-bottom: 10%;
   }
@@ -129,13 +151,22 @@
   justify-content: space-evenly;
   margin-bottom: 5%;
 
+  // dev notes: added custom query for screens widths exceeding "laptop"
+  //to ensure individual cards keep relative equal width
+
+  @media (min-width: 1280px) {
+    div {
+      width: 23%;
+    }
+  }
+
   h2 {
-    font-family: "moneta";
+    font-family: 'moneta';
     font-size: 3rem;
   }
 
   h3 {
-    font-family: "acumin";
+    font-family: 'acumin';
     font-size: 1.2rem;
   }
 }
@@ -160,11 +191,11 @@
 }
 
 @media @mobile-small {
-  // .header {
-  //   height: 30vh;
-  //   display: block;
-  //   position: relative;
-  // }
+  .header {
+    // height: 30vh;
+    display: block;
+    position: relative;
+  }
   .hrf-logo-img-container {
     height: fit-content;
     position: absolute;
@@ -270,11 +301,11 @@
 }
 
 @media @mobile-medium {
-  // .header {
-  //   height: 20vh;
-  //   display: block;
-  //   position: relative;
-  // }
+  .header {
+    //height: 20vh;
+    display: block;
+    position: relative;
+  }
   .hrf-logo-img-container {
     height: fit-content;
     position: absolute;
@@ -384,11 +415,11 @@
 }
 
 @media @mobile-large {
-  // .header {
-  //   height: 20vh;
-  //   display: block;
-  //   position: relative;
-  // }
+  .header {
+    //height: 20vh;
+    display: block;
+    position: relative;
+  }
   .hrf-logo-img-container {
     height: fit-content;
     position: absolute;
@@ -497,11 +528,11 @@
 }
 
 @media @tablet-small {
-  // .header {
-  //   height: 35vh;
-  //   display: block;
-  //   position: relative;
-  // }
+  .header {
+    //height: 35vh;
+    display: block;
+    position: relative;
+  }
   .hrf-logo-img-container {
     height: fit-content;
     position: absolute;
@@ -551,7 +582,7 @@
   .middle-section {
     display: block;
     width: 100%;
-    height: 75vh;
+    //height: 75vh;
     background-color: @secondary-color;
     padding-top: 10%;
     text-align: center;
@@ -566,7 +597,8 @@
     width: 85%;
     text-align: center;
     margin: 0 auto;
-    padding-top: 10%;
+    padding-top: 9%;
+    padding-bottom: 8%;
   }
 
   .middle-section-text-container h3 {
@@ -609,165 +641,166 @@
   }
 }
 
-// @media @tablet-large {
-//   .header {
-//     height: 30vh;
-//     display: block;
-//     position: relative;
-//   }
-//   .hrf-logo-img-container {
-//     height: fit-content;
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//   }
+@media @tablet-large {
+  .header {
+    //height: 30vh;
+    display: block;
+    position: relative;
+  }
+  .hrf-logo-img-container {
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
-//   .hrf-logo-img-container img {
-//     height: 83px;
-//     width: 136px;
-//   }
+  .hrf-logo-img-container img {
+    height: 83px;
+    width: 136px;
+  }
 
-//   .header-text-container h1 {
-//     font-size: 2.7rem;
-//     padding-top: 5%;
-//   }
+  // .header-text-container h1 {
+  //   font-size: 2.7rem;
+  //   padding-top: 5%;
+  // }
 
-//   .header-text-container h3 {
-//     font-size: 1.4rem;
-//     width: 85%;
-//     margin: 0 auto;
-//   }
+  // .header-text-container h3 {
+  //   font-size: 1.4rem;
+  //   width: 85%;
+  //   margin: 0 auto;
+  // }
 
-//   //   .graphs-section {
-//   //     display: block;
-//   //     width: 100%;
-//   //   }
+  //   .graphs-section {
+  //     display: block;
+  //     width: 100%;
+  //   }
 
-//   .grant-rates-by-office-graph-container {
-//     margin-top: 20%;
-//     margin-bottom: 40%;
-//   }
+  .grant-rates-by-office-graph-container {
+    margin-top: 20%;
+    margin-bottom: 40%;
+  }
 
-//   .grant-rates-by-office-graph-container p {
-//     font-size: 2.5rem;
-//   }
+  .grant-rates-by-office-graph-container p {
+    font-size: 2.5rem;
+  }
 
-//   .gr-office-img {
-//     height: 232px;
-//     width: 450px;
-//   }
+  .gr-office-img {
+    height: 232px;
+    width: 450px;
+  }
 
-//   .grant-rates-by-nationality-container {
-//     margin-bottom: 25%;
-//   }
+  .grant-rates-by-nationality-container {
+    margin-bottom: 25%;
+  }
 
-//   .grant-rates-by-nationality-container p {
-//     font-size: 2.5rem;
-//   }
+  .grant-rates-by-nationality-container p {
+    font-size: 2.5rem;
+  }
 
-//   .gr-nationality-img {
-//     margin-bottom: 8%;
-//     height: 335px;
-//     width: 383px;
-//   }
+  .gr-nationality-img {
+    margin-bottom: 8%;
+    height: 335px;
+    width: 383px;
+  }
 
-//   .grant-rates-over-time-container {
-//     margin-bottom: 40%;
-//   }
+  .grant-rates-over-time-container {
+    margin-bottom: 40%;
+  }
 
-//   .gr-overtime-img {
-//     height: 232px;
-//     width: 450px;
-//   }
-//   .grant-rates-over-time-container p {
-//     font-size: 2.5rem;
-//   }
+  .gr-overtime-img {
+    height: 232px;
+    width: 450px;
+  }
+  .grant-rates-over-time-container p {
+    font-size: 2.5rem;
+  }
 
-//   .ant-btn {
-//     line-height: 2;
-//     width: 172px;
-//   }
+  .ant-btn {
+    line-height: 2;
+    width: 172px;
+  }
 
-//   .middle-section {
-//     display: block;
-//     width: 100%;
-//     height: 75vh;
-//     background-color: @secondary-color;
-//     padding-top: 10%;
-//     text-align: center;
-//   }
+  .middle-section {
+    display: block;
+    width: 100%;
+    //height: 75vh;
+    background-color: @secondary-color;
+    padding-top: 10%;
+    text-align: center;
+  }
 
-//   .hrf-img {
-//     height: 418px;
-//     width: 800px;
-//   }
+  .hrf-img {
+    height: 418px;
+    width: 800px;
+  }
 
-//   .middle-section-text-container {
-//     width: 85%;
-//     text-align: center;
-//     margin: 0 auto;
-//     padding-top: 10%;
-//   }
+  .middle-section-text-container {
+    width: 85%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 9%;
+    padding-bottom: 8%;
+  }
 
-//   .middle-section-text-container h3 {
-//     font-size: 1.9rem;
-//     color: @white;
-//   }
+  .middle-section-text-container h3 {
+    font-size: 1.9rem;
+    color: @white;
+  }
 
-//   .bottom-section h1 {
-//     font-size: 3.5rem;
-//   }
+  .bottom-section h1 {
+    font-size: 3.5rem;
+  }
 
-//   .data-container {
-//     display: flex;
-//     flex-wrap: wrap;
-//     width: 100%;
-//   }
+  .data-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
 
-//   .first-data-point-container {
-//     width: 85%;
-//     margin-bottom: 5%;
-//   }
-//   .first-data-point-container h2 {
-//     font-size: 3.5rem;
-//   }
-//   .first-data-point-container h3 {
-//     font-size: 1.5rem;
-//   }
+  .first-data-point-container {
+    width: 85%;
+    margin-bottom: 5%;
+  }
+  .first-data-point-container h2 {
+    font-size: 3.5rem;
+  }
+  .first-data-point-container h3 {
+    font-size: 1.5rem;
+  }
 
-//   .second-data-point-container {
-//     width: 85%;
-//     margin-bottom: 5%;
-//   }
-//   .second-data-point-container h2 {
-//     font-size: 3.5rem;
-//   }
-//   .second-data-point-container h3 {
-//     font-size: 1.5rem;
-//   }
+  .second-data-point-container {
+    width: 85%;
+    margin-bottom: 5%;
+  }
+  .second-data-point-container h2 {
+    font-size: 3.5rem;
+  }
+  .second-data-point-container h3 {
+    font-size: 1.5rem;
+  }
 
-//   .third-data-point-container {
-//     width: 85%;
-//     margin-bottom: 5%;
-//   }
-//   .third-data-point-container h2 {
-//     font-size: 3.5rem;
-//   }
-//   .third-data-point-container h3 {
-//     font-size: 1.5rem;
-//   }
+  .third-data-point-container {
+    width: 85%;
+    margin-bottom: 5%;
+  }
+  .third-data-point-container h2 {
+    font-size: 3.5rem;
+  }
+  .third-data-point-container h3 {
+    font-size: 1.5rem;
+  }
 
-//   .back-to-top {
-//     width: 35%;
-//   }
+  .back-to-top {
+    width: 35%;
+  }
 
-//   .ant-space-align-center {
-//     width: 70%;
-//     display: flex;
-//     flex-wrap: wrap;
-//     justify-content: space-between;
-//   }
-// }
+  .ant-space-align-center {
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
 
 @media @laptop {
   // .header {
@@ -802,6 +835,11 @@
     text-align: center;
     margin: 0 auto;
     padding: 0 2%;
+  }
+
+  .data-container {
+    display: flex;
+    flex-wrap: space-evenly;
   }
 
   .first-data-point-container {
