@@ -39,6 +39,9 @@ function RenderLandingPage(props) {
     },
   ];
 
+
+  //improved semantic tag names of jsx below
+
   return (
     <main className="main">
       <header className="header">
@@ -55,9 +58,11 @@ function RenderLandingPage(props) {
       {/* Graphs Section: Add code here for the graphs section for your first ticket */}
       {/* <div className="graphs-section"> */}
 
+      {/* created a list of objects to map over and clean up jsx */}
+
       <section className="graphs-section">
         {grantGraphs.map(graph => (
-          <div className="grant-graphs-container">
+          <div className="grant-graphs-container" key={graph.id}>
             <img src={graph.src} alt={graph.alt} />
             <h3> {graph.text} </h3>
           </div>
@@ -72,11 +77,14 @@ function RenderLandingPage(props) {
         >
           <span>View the Data</span>
         </Button>
+
+        {/* added second button as an anchor, locating in the deployed sight the download link and copying styling */}
+
         <a href="https://humanrightsfirst.org/wp-content/uploads/2022/10/COW2021001887-I589Data.csv">
-          <div class="read-more-btn">
+          <div className="read-more-btn">
             <button
               type="button"
-              class="ant-btn ant-btn-default"
+              className="ant-btn ant-btn-default"
               style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
             >
               Download the Data
