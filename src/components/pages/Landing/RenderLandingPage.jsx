@@ -18,6 +18,27 @@ function RenderLandingPage(props) {
 
   const history = useHistory();
 
+  const grantGraphs = [
+    {
+      id: 1,
+      src: GrantRatesByOfficeImg,
+      alt: 'GrantRatesByOfficeImg',
+      text: 'Search Grant Rates By Office',
+    },
+    {
+      id: 2,
+      src: GrantRatesByNationalityImg,
+      alt: 'GrantRatesByNationalityImg',
+      text: 'Search Grant Rates By Nationality',
+    },
+    {
+      id: 3,
+      src: GrantRatesOverTimeImg,
+      alt: 'GrantRatesOverTimeImg',
+      text: 'Search Grant Rates Over Time',
+    },
+  ];
+
   return (
     <main className="main">
       <header className="header">
@@ -34,21 +55,13 @@ function RenderLandingPage(props) {
       {/* Graphs Section: Add code here for the graphs section for your first ticket */}
       {/* <div className="graphs-section"> */}
 
-      {/* {I think i want to make each image with header it's own polaroid or card} */}
-
       <section className="graphs-section">
-        <div className="grant-graphs-container">
-          <img src={GrantRatesByOfficeImg} alt="test" />
-          <h3> Search Grant Rates By Office </h3>
-        </div>
-        <div className="grant-graphs-container">
-          <img src={GrantRatesByNationalityImg} alt="test" />
-          <h3> Search Grant Rates By Nationality </h3>
-        </div>
-        <div className="grant-graphs-container">
-          <img src={GrantRatesOverTimeImg} alt="test" />
-          <h3> Search Grant Rates Over Time </h3>
-        </div>
+        {grantGraphs.map(graph => (
+          <div className="grant-graphs-container">
+            <img src={graph.src} alt={graph.alt} />
+            <h3> {graph.text} </h3>
+          </div>
+        ))}
       </section>
 
       <div className="view-more-data-btn-container">
