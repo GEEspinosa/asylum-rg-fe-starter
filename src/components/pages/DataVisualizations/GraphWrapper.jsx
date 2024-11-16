@@ -19,10 +19,17 @@ const { background_color } = colors;
 function GraphWrapper(props) {
   const { set_view, dispatch } = props;
   let { office, view } = useParams();
+  
+  //dev note: conditional determines if specified graphical view is chosen and defaults to time-series
+  
+  
   if (!view) {
     set_view('time-series');
     view = 'time-series';
   }
+
+  //dev notes: determines which map to render below in map_to_render variable in jsx
+
   let map_to_render;
   if (!office) {
     switch (view) {
@@ -50,6 +57,9 @@ function GraphWrapper(props) {
         break;
     }
   }
+
+
+
   function updateStateWithNewData(years, view, office, stateSettingCallback) {
     /*
           _                                                                             _
@@ -73,9 +83,13 @@ function GraphWrapper(props) {
     
     */
 
+    const Real_Production_URL = "https://hrf-asylum-be-b.herokuapp.com/cases";             
+
     if (office === 'all' || !office) {
-      axios
-        .get(process.env.REACT_APP_API_URI, {
+      
+      if (view !== 'citizenship') {
+        axios
+        .get(`${Real_Production_URL}/fiscalSummary`, {
           // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
           params: {
             from: years[0],
@@ -83,28 +97,50 @@ function GraphWrapper(props) {
           },
         })
         .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+          console.log(view, result.data);
+          stateSettingCallback(view, office, [result.data]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
         })
         .catch(err => {
           console.error(err);
         });
-    } else {
+      }
+      
       axios
-        .get(process.env.REACT_APP_API_URI, {
+        .get(`${Real_Production_URL}`, {
           // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
           params: {
             from: years[0],
             to: years[1],
-            office: office,
           },
         })
         .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+          console.log(view, result.data);
+          //stateSettingCallback(view, office, result.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
         })
         .catch(err => {
           console.error(err);
         });
-    }
+    } 
+    //else {
+    //   axios
+    //     .get(`${Real_Production_URL}`, {
+    //       // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+    //       params: {
+    //         from: years[0],
+    //         to: years[1],
+    //         office: office,
+    //       },
+    //     })
+    //     .then(result => {
+    //       console.log(view, result.data);
+    //       //stateSettingCallback(view, office, result.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+    //     })
+    //     .catch(err => {
+    //       console.error(err);
+    //     });
+    // }
+
+
   }
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
