@@ -19,10 +19,9 @@ const { background_color } = colors;
 function GraphWrapper(props) {
   const { set_view, dispatch } = props;
   let { office, view } = useParams();
-  
+
   //dev note: conditional determines if specified graphical view is chosen and defaults to time-series
-  
-  
+
   if (!view) {
     set_view('time-series');
     view = 'time-series';
@@ -58,8 +57,6 @@ function GraphWrapper(props) {
     }
   }
 
-
-
   function updateStateWithNewData(years, view, office, stateSettingCallback) {
     /*
           _                                                                             _
@@ -83,68 +80,46 @@ function GraphWrapper(props) {
     
     */
 
-    const Real_Production_URL = "https://hrf-asylum-be-b.herokuapp.com/cases";             
+    const Real_Production_URL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
 
     if (office === 'all' || !office) {
-      
-      if (view !== 'citizenship') {
-        axios
-        .get(`${Real_Production_URL}/fiscalSummary`, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-          params: {
-            from: years[0],
-            to: years[1],
-          },
-        })
+      axios
+        .get(
+          `${Real_Production_URL}${
+            view !== 'citizenship' ? '/fiscalSummary' : '/citizenshipSummary'
+          }`,
+          {
+            // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+            params: {
+              from: years[0],
+              to: years[1],
+            },
+          }
+        )
         .then(result => {
-          console.log(view, [result.data]);
+          console.log(view, office, [result.data]);
           stateSettingCallback(view, office, [result.data]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
         })
         .catch(err => {
           console.error(err);
         });
-      }
-
-      else if (view === 'citizenship') {
-        axios
-        .get(`${Real_Production_URL}/citizenshipSummary`, {
+    } else {
+      axios
+        .get(`${Real_Production_URL}/fiscalSummary`, {
           params: {
             from: years[0],
             to: years[1],
+            office: office,
           },
         })
         .then(result => {
-          
           console.log(view, office, result.data);
-          stateSettingCallback(view, office, result.data);
+          stateSettingCallback(view, office, [result.data]);
         })
         .catch(err => {
           console.error(err);
         });
-      }
-      
-     
-    } 
-    // else {
-    //   axios
-    //     .get(`${Real_Production_URL}`, {
-    //       // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-    //       params: {
-    //         from: years[0],
-    //         to: years[1],
-    //         office: office,
-    //       },
-    //     })
-    //     .then(result => {
-    //       console.log(view, result.data);
-    //       stateSettingCallback(view, office, result.data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-    //     })
-    //     .catch(err => {
-    //       console.error(err);
-    //     });
-    // }
-
-
+    }
   }
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
