@@ -14,20 +14,20 @@ import { resetVisualizationQuery } from '../../../state/actionCreators';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
 
+
 const { background_color } = colors;
 
 function GraphWrapper(props) {
   const { set_view, dispatch } = props;
   let { office, view } = useParams();
+  
 
-  //dev note: conditional determines if specified graphical view is chosen and defaults to time-series
+  const Real_Production_URL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
 
   if (!view) {
     set_view('time-series');
     view = 'time-series';
   }
-
-  //dev notes: determines which map to render below in map_to_render variable in jsx
 
   let map_to_render;
   if (!office) {
@@ -57,135 +57,41 @@ function GraphWrapper(props) {
     }
   }
 
-  function updateStateWithNewData(years, view, office, stateSettingCallback) {
-    /*
-          _                                                                             _
-        |                                                                                 |
-        |   Example request for once the `/summary` endpoint is up and running:           |
-        |                                                                                 |
-        |     `${url}/summary?to=2022&from=2015&office=ZLA`                               |
-        |                                                                                 |
-        |     so in axios we will say:                                                    |
-        |                                                                                 |     
-        |       axios.get(`${url}/summary`, {                                             |
-        |         params: {                                                               |
-        |           from: <year_start>,                                                   |
-        |           to: <year_end>,                                                       |
-        |           office: <office>,       [ <-- this one is optional! when    ]         |
-        |         },                        [ querying by `all offices` there's ]         |
-        |       })                          [ no `office` param in the query    ]         |
-        |                                                                                 |
-          _                                                                             _
-                                   -- Mack 
+  async function updateStateWithNewData(years, view, office, stateSettingCallback) {
     
-    */
-
-    const Real_Production_URL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
-
-    //dev notes: it seems I need to combine result.data from both endpoints and send to callback
-    //I need to fill this up with data from both endpoints
-
-    async function fetchData() {
-      if (office === 'all' || !office) {
-        try {
-          const resData1 = await axios.get(
-            `${Real_Production_URL}/fiscalSummary`,
-            {
-              params: {
-                from: years[0],
-                to: years[1],
-              },
-            }
-          );
-          const resData2 = await axios.get(
-            `${Real_Production_URL}/citizenshipSummary`,
-            {
-              params: {
-                from: years[0],
-                to: years[1],
-              },
-            }
-          );
-          stateSettingCallback(view, office, [
-            { ...resData1.data, citizenshipResults: [...resData2.data] },
-          ]);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        try {
-          const resData1 = await axios.get(
-            `${Real_Production_URL}/fiscalSummary`,
-            {
-              params: {
-                from: years[0],
-                to: years[1],
-                office: office,
-              },
-            }
-          );
-          const resData2 = await axios.get(
-            `${Real_Production_URL}/citizenshipSummary`,
-            {
-              params: {
-                from: years[0],
-                to: years[1],
-                office: office,
-              },
-            }
-          );
-          stateSettingCallback(view, office, [
-            { ...resData1.data, citizenshipResults: [...resData2.data] },
-          ]);
-        } catch (error) {
-          console.log(error);
-        }
+    try {
+        const resData1 = await axios.get(
+          `${Real_Production_URL}/fiscalSummary`,
+          {
+            params: {
+              from: years[0],
+              to: years[1],
+              office: office === 'all' || !office ? undefined : office,
+            },
+          }
+        );
+        const resData2 = await axios.get(
+          `${Real_Production_URL}/citizenshipSummary`,
+          {
+            params: {
+              from: years[0],
+              to: years[1],
+              office: office === 'all' || !office ? undefined : office,
+            },
+          }
+        );
+        
+        stateSettingCallback(view, office, [{ ...resData1.data, citizenshipResults: [...resData2.data] }]);
+        
+      } catch (error) {
+        throw(error);
       }
-    }
+  };
 
-    fetchData();
-
-    //   if (office === 'all' || !office) {
-    //     axios
-    //       .get(
-    //         `${Real_Production_URL}/fiscalSummary'`,
-    //         {
-    //           // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-    //           params: {
-    //             from: years[0],
-    //             to: years[1],
-    //           },
-    //         }
-    //       )
-    //       .then(result => {
-    //         //let data =  view !== 'citizenship' ? [result.data] : [{"citizenshipResults": result.data}];
-    //         console.log(view, office, testObj);
-    //         stateSettingCallback(view, office, testObj); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-    //       })
-    //       .catch(err => {
-    //         console.error(err);
-    //       });
-    //   } else {
-    //     axios
-    //       .get(`${Real_Production_URL}/fiscalSummary`, {
-    //         params: {
-    //           from: years[0],
-    //           to: years[1],
-    //           office: office,
-    //         },
-    //       })
-    //       .then(result => {
-    //         console.log(view, office, result.data);
-    //         stateSettingCallback(view, office, [result.data]);
-    //       })
-    //       .catch(err => {
-    //         console.error(err);
-    //       });
-    //   }
-  }
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
   };
+
   return (
     <div
       className="map-wrapper-container"

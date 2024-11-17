@@ -13,11 +13,13 @@ import { LandingPage } from './components/pages/Landing';
 
 import { FooterContent, SubFooter } from './components/Layout/Footer';
 import { HeaderContent } from './components/Layout/Header';
-
+import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
+//import AuthNav from  './components/Auth/auth-nav';
 // import { TablePage } from './components/pages/Table';
 
 import { Layout } from 'antd';
 import GraphsContainer from './components/pages/DataVisualizations/GraphsContainer';
+import ProfilePage from './components/pages/Profile/ProfilePage';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './state/reducers';
@@ -29,9 +31,13 @@ const store = configureStore({ reducer: reducer });
 ReactDOM.render(
   <Router>
     <Provider store={store}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      
+        <React.StrictMode>
+        <Auth0ProviderWithHistory>
+          <App />
+          </Auth0ProviderWithHistory> 
+        </React.StrictMode>
+        
     </Provider>
   </Router>,
   document.getElementById('root')
@@ -50,9 +56,11 @@ export function App() {
         }}
       >
         <HeaderContent />
+       
       </Header>
       <Switch>
         <Route path="/" exact component={LandingPage} />
+        <Route path="/profile" component={ProfilePage} />
         <Route path="/graphs" component={GraphsContainer} />
         <Route component={NotFoundPage} />
       </Switch>

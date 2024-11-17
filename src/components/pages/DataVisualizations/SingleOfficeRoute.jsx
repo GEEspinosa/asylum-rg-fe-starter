@@ -3,7 +3,7 @@ import GraphWrapper from './GraphWrapper';
 import 'antd/dist/antd.css';
 
 function SingleOfficeRoute(props) {
-  const { set_view } = props;
+  const { set_view} = props;
   return (
     <div
       className="single-office-route"

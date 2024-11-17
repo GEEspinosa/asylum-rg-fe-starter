@@ -3,6 +3,7 @@ import { Image } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../../styles/Images/WhiteLogo.png';
 import { colors } from '../../styles/data_vis_colors';
+import NavBar from './nav-bar';
 
 const { primary_accent_color } = colors;
 
@@ -22,8 +23,12 @@ function HeaderContent() {
         </a>
       </div>
       <div>
+        <NavBar />
         <Link to="/" style={{ color: '#E2F0F7', paddingRight: '75px' }}>
           Home
+        </Link>
+        <Link to="/profile" style={{ color: '#E2F0F7', paddingRight: '75px' }}>
+          Login
         </Link>
         <Link to="/graphs" style={{ color: '#E2F0F7' }}>
           Graphs
