@@ -10,19 +10,19 @@ import YearLimitsSelect from './YearLimitsSelect';
 import ViewSelect from './ViewSelect';
 import axios from 'axios';
 import { resetVisualizationQuery } from '../../../state/actionCreators';
-//import test_data from '../../../data/test_data.json';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
 
 
+let toggle = false;
+let blob = [];
 const { background_color } = colors;
 
 function GraphWrapper(props) {
   const { set_view, dispatch } = props;
   let { office, view } = useParams();
-  
 
-  const Real_Production_URL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
+  
 
   if (!view) {
     set_view('time-series');
@@ -30,6 +30,7 @@ function GraphWrapper(props) {
   }
 
   let map_to_render;
+
   if (!office) {
     switch (view) {
       case 'time-series':
@@ -57,9 +58,16 @@ function GraphWrapper(props) {
     }
   }
 
-  async function updateStateWithNewData(years, view, office, stateSettingCallback) {
-    
-    try {
+  const Real_Production_URL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
+
+  async function updateStateWithNewData(
+    years,
+    view,
+    office,
+    stateSettingCallback
+  ) {
+    if (toggle === false) {
+      try {
         const resData1 = await axios.get(
           `${Real_Production_URL}/fiscalSummary`,
           {
@@ -81,12 +89,20 @@ function GraphWrapper(props) {
           }
         );
         
-        stateSettingCallback(view, office, [{ ...resData1.data, citizenshipResults: [...resData2.data] }]);
+        blob.push({...resData1.data, citizenshipResults: [...resData2.data]});
+        stateSettingCallback(view, office, [
+          { ...resData1.data, citizenshipResults: [...resData2.data] },
+        ]);
+
+        toggle = true;
         
       } catch (error) {
-        throw(error);
+        throw error;
       }
-  };
+    } else {
+      stateSettingCallback(view, office, blob);
+    }
+  }
 
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));

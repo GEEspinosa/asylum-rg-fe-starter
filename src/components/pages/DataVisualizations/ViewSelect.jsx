@@ -10,7 +10,6 @@ function ViewSelect(props) {
   const { set_view } = props;
   let { office } = useParams();
   function update_view(view, office) {
-    
     set_view(view);
     history.push(`/graphs/${office ? office : 'all'}/${view}`);
   }

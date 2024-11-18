@@ -107,10 +107,18 @@ function CitizenshipMapSingleOffice(props) {
         }}
         style={{ width: '100%', fontWeight: '900' }}
       />
-      <label for="regionSelect">Select another region below</label>
+
+      {/* dev notes: changed label property "for" to "htmlFor" based on logged err
+      but not sure if that was a good idea? */}
+
+      <label htmlFor="regionSelect">Select another region below</label>
       <select name="regionSelect" onChange={handleScopeChange}>
         {geoScopeArray.map((a, key) => {
-          return <option value={a} key={key}>{a.toUpperCase()}</option>;
+          return (
+            <option value={a} key={key}>
+              {a.toUpperCase()}
+            </option>
+          );
         })}
       </select>
       <p>Table view</p>

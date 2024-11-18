@@ -13,8 +13,8 @@ import { LandingPage } from './components/pages/Landing';
 
 import { FooterContent, SubFooter } from './components/Layout/Footer';
 import { HeaderContent } from './components/Layout/Header';
+//import { useAuth0 } from '@auth0/auth0-react';
 import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
-//import AuthNav from  './components/Auth/auth-nav';
 // import { TablePage } from './components/pages/Table';
 
 import { Layout } from 'antd';
@@ -45,6 +45,13 @@ ReactDOM.render(
 
 export function App() {
   const { Footer, Header } = Layout;
+  // const { isLoading } = useAuth0();
+
+
+  // if (isLoading) {
+  //   return <Loading />
+  // }
+
   return (
     <Layout>
       <Header
@@ -56,7 +63,7 @@ export function App() {
         }}
       >
         <HeaderContent />
-       
+        
       </Header>
       <Switch>
         <Route path="/" exact component={LandingPage} />
@@ -64,6 +71,7 @@ export function App() {
         <Route path="/graphs" component={GraphsContainer} />
         <Route component={NotFoundPage} />
       </Switch>
+      
       <Footer
         style={{
           backgroundColor: primary_accent_color,

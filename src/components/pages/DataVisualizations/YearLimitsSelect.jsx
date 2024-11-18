@@ -63,6 +63,8 @@ function YearLimitsSelect(props) {
   //       e.target.value
   //     ));
   // };
+
+
   const stateSettingFn = (view, office, data) => {
     const plotlyReadyData = rawApiDataToPlotlyReadyInfo(view, office, data);
     dispatch(setVisualizationData(view, office, plotlyReadyData));
@@ -99,7 +101,7 @@ function YearLimitsSelect(props) {
         form={form}
         name="yearLimitsSelect"
         initialValues={{ year_start: years[0], year_end: years[1] }}
-        onFinish={() => {
+        onFinish={() => {   
           updateStateWithNewData(years, view, office, stateSettingFn);
         }}
         autoComplete="off"
