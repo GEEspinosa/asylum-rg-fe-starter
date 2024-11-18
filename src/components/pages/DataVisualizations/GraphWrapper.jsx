@@ -13,9 +13,12 @@ import { resetVisualizationQuery } from '../../../state/actionCreators';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
 
+//dev notes: created a replacement .json file in data folder to store retrieved blob data
 
-let toggle = false;
-let blob = [];
+import api_data from '../../../data/api_data.json';
+
+
+
 const { background_color } = colors;
 
 function GraphWrapper(props) {
@@ -66,7 +69,10 @@ function GraphWrapper(props) {
     office,
     stateSettingCallback
   ) {
-    if (toggle === false) {
+
+    //dev note: created conditional logic to check if api_data stores data from api
+
+    if (!api_data.length) {
       try {
         const resData1 = await axios.get(
           `${Real_Production_URL}/fiscalSummary`,
@@ -87,25 +93,21 @@ function GraphWrapper(props) {
               office: office === 'all' || !office ? undefined : office,
             },
           }
-        );
-        
-        blob.push({...resData1.data, citizenshipResults: [...resData2.data]});
+        );      
+        api_data.push({...resData1.data, citizenshipResults: [...resData2.data]});
         stateSettingCallback(view, office, [
           { ...resData1.data, citizenshipResults: [...resData2.data] },
-        ]);
-
-        toggle = true;
-        
+        ]);  
       } catch (error) {
         throw error;
       }
     } else {
-      stateSettingCallback(view, office, blob);
+      stateSettingCallback(view, office, api_data);    
     }
   }
 
   const clearQuery = (view, office) => {
-    dispatch(resetVisualizationQuery(view, office));
+    dispatch(resetVisualizationQuery(view, office));    
   };
 
   return (
